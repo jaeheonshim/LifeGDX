@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 public class GameScreen implements Screen {
@@ -41,6 +42,10 @@ public class GameScreen implements Screen {
         if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             timer += delta;
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            grid.killAll();
+        }
+
         if (timer > speed) {
             grid.execute();
             timer = 0;
@@ -53,7 +58,6 @@ public class GameScreen implements Screen {
             int y = Gdx.input.getY();
 
             Vector2 touchlocation =  viewport.unproject(new Vector2(x, y));
-            System.out.println((int) touchlocation.x / cellSize);
 
             if(((int) (touchlocation.x / cellSize) >= 0 && (int) (touchlocation.x / cellSize) < grid.getWidth()) && ((int) (touchlocation.y / cellSize) >= 0 && (int) (touchlocation.y / cellSize) < grid.getHeight())) {
                 Cell clickedCell = grid.getCell((int) (touchlocation.x / cellSize), (int) (touchlocation.y / cellSize));

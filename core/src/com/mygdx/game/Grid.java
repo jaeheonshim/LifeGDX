@@ -1,4 +1,5 @@
 package com.mygdx.game;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -18,8 +19,8 @@ public class Grid {
     public Grid(Grid grid) {
         Cell[][] newGrid = new Cell[grid.grid.length][grid.grid[0].length];
 
-        for(int i = 0; i < grid.grid.length; i++) {
-            for(int j = 0; j < grid.grid[i].length; j++) {
+        for (int i = 0; i < grid.grid.length; i++) {
+            for (int j = 0; j < grid.grid[i].length; j++) {
                 newGrid[i][j] = new Cell(grid.grid[i][j]);
             }
         }
@@ -38,8 +39,8 @@ public class Grid {
         };
 
         for (int i = 0; i < xCheckOperations.length; i++) {
-            if (x + xCheckOperations[i] >= 0 && x + xCheckOperations[i] < grid.length && y + yCheckOperations[i] >= 0 && y + yCheckOperations[i] < grid[0].length) {
-                if (grid[ y + yCheckOperations[i]][x + xCheckOperations[i]].isPopulated()) {
+            if (x + xCheckOperations[i] >= 0 && x + xCheckOperations[i] < grid[0].length && y + yCheckOperations[i] >= 0 && y + yCheckOperations[i] < grid.length) {
+                if (grid[y + yCheckOperations[i]][x + xCheckOperations[i]].isPopulated()) {
                     neighbors++;
                 }
             }
@@ -50,6 +51,14 @@ public class Grid {
 
     public Cell getCell(int x, int y) {
         return getGrid()[y][x];
+    }
+
+    public void killAll() {
+        for (Cell[] cells : grid) {
+            for (Cell cell : cells) {
+                cell.kill();
+            }
+        }
     }
 
     public void execute() {
@@ -63,7 +72,7 @@ public class Grid {
                         grid[i][j].kill();
                     } else if (tempGrid.getNumberOfNeighbors(j, i) > 3) {
                         grid[i][j].kill();
-                    } else if(tempGrid.getNumberOfNeighbors(j, i) == 2 || tempGrid.getNumberOfNeighbors(j, i) == 3) {
+                    } else if (tempGrid.getNumberOfNeighbors(j, i) == 2 || tempGrid.getNumberOfNeighbors(j, i) == 3) {
                         grid[i][j].populate();
                     }
                 } else {
@@ -77,8 +86,8 @@ public class Grid {
 
     public Cell[][] getGrid() {
         Cell[][] returnGrid = new Cell[grid.length - 2][grid[0].length - 2];
-        for(int i = 1; i < grid.length - 1; i++) {
-            for(int j = 1; j < grid[i].length - 1; j++) {
+        for (int i = 1; i < grid.length - 1; i++) {
+            for (int j = 1; j < grid[i].length - 1; j++) {
                 returnGrid[i - 1][j - 1] = grid[i][j];
             }
         }
